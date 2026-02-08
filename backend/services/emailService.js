@@ -1,26 +1,14 @@
-const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 
-// Create email transporter
-const createTransporter = () => {
-    return nodemailer.createTransport({
-        host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-        port: process.env.EMAIL_PORT || 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
-        }
-    });
-};
+// Initialize SendGrid with API key
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// Send OTP email
+// Send OTP email using SendGrid
 const sendOTPEmail = async (email, otp, userName = 'User') => {
     try {
-        const transporter = createTransporter();
-
-        const mailOptions = {
-            from: `"WaterFlow App" <${process.env.EMAIL_USER}>`,
+        const msg = {
             to: email,
+            from: process.env.SENDGRID_FROM_EMAIL || process.env.EMAIL_USER, // Verified sender email
             subject: 'Your WaterFlow OTP Code',
             html: `
                 <!DOCTYPE html>
@@ -100,23 +88,21 @@ const sendOTPEmail = async (email, otp, userName = 'User') => {
             `
         };
 
-        const info = await transporter.sendMail(mailOptions);
-        console.log('OTP email sent: %s', info.messageId);
-        return { success: true, messageId: info.messageId };
+        await sgMail.send(msg);
+        console.log('OTP email sent via SendGrid to:', email);
+        return { success: true };
     } catch (error) {
-        console.error('Error sending OTP email:', error);
+        console.error('SendGrid error:', error.response?.body || error.message);
         return { success: false, error: error.message };
     }
 };
 
-// Send welcome email
+// Send welcome email using SendGrid
 const sendWelcomeEmail = async (email, userName) => {
     try {
-        const transporter = createTransporter();
-
-        const mailOptions = {
-            from: `"WaterFlow App" <${process.env.EMAIL_USER}>`,
+        const msg = {
             to: email,
+            from: process.env.SENDGRID_FROM_EMAIL || process.env.EMAIL_USER,
             subject: 'Welcome to WaterFlow! 🎉',
             html: `
                 <!DOCTYPE html>
@@ -145,16 +131,6 @@ const sendWelcomeEmail = async (email, userName) => {
                             border-radius: 12px;
                             margin: 20px 0;
                         }
-                        .button {
-                            display: inline-block;
-                            background: #667eea;
-                            color: white;
-                            padding: 12px 30px;
-                            text-decoration: none;
-                            border-radius: 8px;
-                            margin-top: 20px;
-                            font-weight: bold;
-                        }
                     </style>
                 </head>
                 <body>
@@ -181,10 +157,10 @@ const sendWelcomeEmail = async (email, userName) => {
             `
         };
 
-        await transporter.sendMail(mailOptions);
-        console.log('Welcome email sent to:', email);
+        await sgMail.send(msg);
+        console.log('Welcome email sent via SendGrid to:', email);
     } catch (error) {
-        console.error('Error sending welcome email:', error);
+        console.error('SendGrid welcome email error:', error.response?.body || error.message);
     }
 };
 
