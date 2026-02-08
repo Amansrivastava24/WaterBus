@@ -168,7 +168,7 @@ const Login = () => {
                                 />
                             </div>
                             <p className="text-xs text-slate-500 mt-2 text-center">
-                                OTP expires in 10 minutes
+                                OTP expires in 10 minutes Check the Spam folder if didn't receive it.
                             </p>
                         </div>
 
