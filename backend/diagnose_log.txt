@@ -1,0 +1,5 @@
+Connected to DB
+--- USERS ---
+Email: amansivastav@gmail.com, ID: 6988497517473d06162dbaa0, BusinessID: 69884aa717473d06162dbadf
+--- BUSINESSES ---
+Name: waterify, ID: 69884aa717473d06162dbadf, OwnerID: 6988497517473d06162dbaa0
