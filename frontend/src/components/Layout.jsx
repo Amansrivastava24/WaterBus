@@ -24,7 +24,7 @@ const Layout = () => {
                     <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
                         W
                     </div>
-                    <span className="font-bold text-slate-900">WaterFlow</span>
+                    <span className="font-bold text-slate-900">WaterBus</span>
                 </div>
                 <button
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
