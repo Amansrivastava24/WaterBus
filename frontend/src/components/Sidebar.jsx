@@ -37,7 +37,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                         <div className="w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center text-white font-bold text-xl">
                             W
                         </div>
-                        <span className="text-xl font-bold text-white tracking-tight">WaterFlow</span>
+                        <span className="text-xl font-bold text-white tracking-tight">WaterBus</span>
                     </div>
                     <button onClick={onClose} className="lg:hidden p-2 text-slate-400 hover:text-white">
                         <LogOut size={20} className="rotate-180" />
